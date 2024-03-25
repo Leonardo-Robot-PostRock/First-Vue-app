@@ -13,7 +13,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg"
-    :class="navbarClasses"
+    :class="[`navbar-${theme}`, `bg-${theme}`, 'navbar', 'navbar-expand-lg']"
     >
         <div class="container-fluid">
             <a class="navbar-brand" href="#">My Vue</a>
@@ -30,7 +30,7 @@
                         page.link.text }}</a>
                 </li>
             </ul>
-            <form class="d-flex"><button class="btn btn-primary" @click.prevent="useDarkNavbar =!useDarkNavbar">Toggle Navbar</button></form>
+            <form class="d-flex"><button class="btn btn-primary" @click.prevent="changeTheme()">Toggle Navbar</button></form>
         </div>
     </nav>
     <div id="content" class="container">
@@ -40,19 +40,20 @@
 
     <script>
         Vue.createApp({
-            computed: {
-                navbarClasses(){
-                    return{
-                        'navbar-light': !this.useDarkNavbar,
-                        'bg-light': !this.useDarkNavbar,
-                        'navbar-dark': this.useDarkNavbar,
-                        'bg-dark': this.useDarkNavbar       
-                    }
-                }
-            },
+            // computed: {
+            //     navbarClasses(){
+            //         return{
+            //             'navbar-light': !this.useDarkNavbar,
+            //             'bg-light': !this.useDarkNavbar,
+            //             'navbar-dark': this.useDarkNavbar,
+            //             'bg-dark': this.useDarkNavbar       
+            //         }
+            //     }
+            // },
             data() {
                 return {
                     activePage: 0,
+                    theme: 'light',
                     useDarkNavbar:true,
                     pages: [
                         {
@@ -72,6 +73,15 @@
                         }
 
                     ]
+                }
+            },
+            methods: {
+                changeTheme(){
+                    let theme = 'light'
+                    if(this.theme == 'light'){
+                        theme = 'dark'
+                    }
+                    this.theme = theme;
                 }
             }
         }).mount('body');
